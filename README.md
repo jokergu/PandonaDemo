@@ -1,4 +1,16 @@
-# Pandona LVGL 按键说明
+# Pandona 开发板综合例程说明
+
+## 简介
+
+Pandona开发板综合例程，用于学习及加深对RT-Thread的理解
+
+## 硬件资源说明
+
+IoT Board 开发板如下图所示：
+
+![IoT Board 开发板](docs/figures/IoT_Board.png)
+
+## Pandona LVGL 按键说明
 
 | 按键名称 | 事件  | 功能 |
 | ---- | ------ | ----- |
