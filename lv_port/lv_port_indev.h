@@ -32,6 +32,7 @@ extern "C" {
  **********************/
 void lv_port_indev_init(void);
 lv_indev_t *lv_port_indev_get_handle(void);
+lv_group_t *lv_port_indev_get_group(void);
 void lv_port_indev_set_state(lv_indev_state_t state);
 void lv_port_indev_set_key(uint32_t key);
 

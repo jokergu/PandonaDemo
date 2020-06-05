@@ -10,8 +10,6 @@
  *      INCLUDES
  *********************/
 #include "lv_port_disp.h"
-//#include "bsp_tft_1050.h"
-//#include "fsl_common.h"
 #include "drv_lcd.h"
 
 /*********************
@@ -32,8 +30,6 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 static void gpu_blend_cb(lv_disp_drv_t * disp_drv, lv_color_t * dest, const lv_color_t * src, uint32_t length, lv_opa_t opa);
 static void gpu_fill_cb(lv_disp_drv_t * disp_drv, lv_color_t * dest_buf, lv_coord_t dest_width, const lv_area_t * fill_area, lv_color_t color);
 #endif
-//static void my_rounder_cb(lv_disp_drv_t * disp_drv, lv_area_t * area);
-//static void my_set_px_cb(lv_disp_drv_t * disp_drv, uint8_t * buf, lv_coord_t buf_w, lv_coord_t x, lv_coord_t y, lv_color_t color, lv_opa_t opa);
 
 /**********************
  *  STATIC VARIABLES
@@ -42,12 +38,6 @@ static void gpu_fill_cb(lv_disp_drv_t * disp_drv, lv_color_t * dest_buf, lv_coor
 static lv_disp_buf_t disp_buf_2;
 static lv_color_t buf2_1[LV_HOR_RES_MAX * BUF_VER_SIZE];
 static lv_color_t buf2_2[LV_HOR_RES_MAX * BUF_VER_SIZE];
- 
-//static lv_disp_buf_t disp_buf_3;
-//static lv_color_t buf3_1[LV_HOR_RES_MAX * LV_VER_RES_MAX];            /*A screen sized buffer*/
-//static lv_color_t buf3_2[LV_HOR_RES_MAX * LV_VER_RES_MAX]; 
-//AT_NONCACHEABLE_SECTION_ALIGN(static lv_color_t buf3_1[LV_HOR_RES_MAX * LV_VER_RES_MAX], 64);
-//AT_NONCACHEABLE_SECTION_ALIGN(static lv_color_t buf3_2[LV_HOR_RES_MAX * LV_VER_RES_MAX], 64);
 
 /**********************
  *      MACROS
@@ -85,24 +75,7 @@ void lv_port_disp_init(void)
      *      whole frame to display. This way you only need to change the frame buffer's address instead of
      *      copying the pixels.
      * */
-
-    /* Example for 1) */
-////    static lv_disp_buf_t disp_buf_1;
-////    static lv_color_t buf1_1[LV_HOR_RES_MAX * 10];                      /*A buffer for 10 rows*/
-////    lv_disp_buf_init(&disp_buf_1, buf1_1, NULL, LV_HOR_RES_MAX * 10);   /*Initialize the display buffer*/
-
-    /* Example for 2) */
-//    static lv_disp_buf_t disp_buf_2;
-//    static lv_color_t buf2_1[LV_HOR_RES_MAX * 10];                        /*A buffer for 10 rows*/
-//    static lv_color_t buf2_2[LV_HOR_RES_MAX * 10];                        /*An other buffer for 10 rows*/
     lv_disp_buf_init(&disp_buf_2, buf2_1, buf2_2, LV_HOR_RES_MAX * BUF_VER_SIZE);   /*Initialize the display buffer*/
-
-    /* Example for 3) */
-//    static lv_disp_buf_t disp_buf_3;
-//    static lv_color_t buf3_1[LV_HOR_RES_MAX * LV_VER_RES_MAX];            /*A screen sized buffer*/
-//    static lv_color_t buf3_2[LV_HOR_RES_MAX * LV_VER_RES_MAX];            /*An other screen sized buffer*/
-//    lv_disp_buf_init(&disp_buf_3, buf3_1, buf3_2, LV_HOR_RES_MAX * LV_VER_RES_MAX);   /*Initialize the display buffer*/
-
 
     /*-----------------------------------
      * Register the display in LittlevGL
@@ -133,9 +106,6 @@ void lv_port_disp_init(void)
     disp_drv.gpu_fill_cb = gpu_fill_cb;
 #endif
 
-//	disp_drv.rounder_cb = my_rounder_cb;
-//	disp_drv.set_px_cb = my_set_px_cb;
-
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
 }
@@ -156,38 +126,9 @@ static void disp_init(void)
 static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p)
 {
     /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
-#if 0
-    int32_t x;
-    int32_t y;
-    for(y = area->y1; y <= area->y2; y++) {
-        for(x = area->x1; x <= area->x2; x++) {
-            /* Put a pixel to the display. For example: */
-            /* put_px(x, y, *color_p)*/
-			lcd_draw_point_color(x, y, color_p->full);
-            color_p++;
-        }
-    }
-#else
 	uint16_t width = lv_area_get_width(area);
 	uint16_t height = lv_area_get_height(area);
-	int32_t x;
-    int32_t y;
-	uint8_t *p;
-	lv_color_t *pColor = color_p;
-	uint8_t temp;
-//    for(y = area->y1; y <= area->y2; y++)
-//	{
-//        for(x = area->x1; x <= area->x2; x++)
-//		{
-//			p = (uint8_t*)pColor;
-//            temp = p[0];
-//			p[0] = p[1];
-//			p[1] = temp;
-//            pColor++;
-//        }
-//    }
 	lcd_show_image(area->x1, area->y1, width, height, (rt_uint8_t*)color_p);
-#endif
 
     /* IMPORTANT!!!
      * Inform the graphics library that you are ready with the flushing*/
@@ -234,22 +175,7 @@ static void gpu_fill_cb(lv_disp_drv_t * disp_drv, lv_color_t * dest_buf, lv_coor
 
 #endif  /*LV_USE_GPU*/
 
-//static void my_rounder_cb(lv_disp_drv_t * disp_drv, lv_area_t * area)
-//{
-//  /* Update the areas as needed. Can be only larger.
-//   * For example to always have lines 8 px height:*/
-//   area->y1 = area->y1 & 0x07;
-//   area->y2 = (area->y2 & 0x07) + 8;
-//}
 
-//static void my_set_px_cb(lv_disp_drv_t * disp_drv, uint8_t * buf, lv_coord_t buf_w, lv_coord_t x, lv_coord_t y, lv_color_t color, lv_opa_t opa)
-//{
-//    /* Write to the buffer as required for the display.
-//     * Write only 1-bit for monochrome displays mapped vertically:*/
-// buf += buf_w * (y >> 3) + x;
-// if(lv_color_brightness(color) > 128) (*buf) |= (1 << (y % 8));
-// else (*buf) &= ~(1 << (y % 8));
-//}
 
 #else /* Enable this file at the top */
 
