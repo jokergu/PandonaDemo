@@ -10,6 +10,7 @@
 #include "lv_examples.h"
 #include "multi_button.h"
 
+#include "xgui.h"
 
 //BUTTON_RELEASE_TIME一定要大于等于LV_INDEV_DEF_READ_PERIOD，否则可能造成事件丢失
 #define BUTTON_RELEASE_TIME    (LV_INDEV_DEF_READ_PERIOD + 10)
@@ -228,7 +229,8 @@ static void thread_lvgl_entry(void *parameter)
 	lv_port_indev_init();
 	
     //调用键盘例程
-	lv_demo_keypad_encoder();
+	// lv_demo_keypad_encoder();
+    xgui_page_led();
 	
     //周期调用任务处理程序
 	while(1)

@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER, STM32L475xx, RT_USING_ARM_LIBC,LV_CONF_INCLUDE_SIMPLE,LV_EX_CONF_INCLUDE_SIMPLE</Define>
               <Undefine></Undefine>
-              <IncludePath>.;..\..\rt-thread\include;.;applications;packages\MultiButton-latest;..\..\rt-thread\libcpu\arm\common;..\..\rt-thread\libcpu\arm\cortex-m4;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\drivers\spi;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\finsh;..\..\rt-thread\components\libc\compilers\armlibc;..\..\rt-thread\components\libc\compilers\common;..\..\rt-thread\components\utilities\ulog;..\..\libraries\CMSIS\Device\ST\STM32L4xx\Include;..\..\libraries\CMSIS\Include;..\..\libraries\STM32L4xx_HAL_Driver\inc;..\..\drivers;..\..\;..\..\lvgl;..\..\lv_port;..\..\lv_examples</IncludePath>
+              <IncludePath>.;..\..\rt-thread\include;.;applications;packages\MultiButton-latest;..\..\rt-thread\libcpu\arm\common;..\..\rt-thread\libcpu\arm\cortex-m4;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\drivers\spi;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\drivers\include;..\..\rt-thread\components\finsh;..\..\rt-thread\components\libc\compilers\armlibc;..\..\rt-thread\components\libc\compilers\common;..\..\rt-thread\components\utilities\ulog;..\..\libraries\CMSIS\Device\ST\STM32L4xx\Include;..\..\libraries\CMSIS\Include;..\..\libraries\STM32L4xx_HAL_Driver\inc;..\..\drivers;..\..\;..\..\lvgl;..\..\lv_port;..\..\lv_examples;.\xgui</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1440,6 +1440,16 @@
               <FileName>lv_demo_keypad_encoder.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\lv_examples\src\lv_demo_keypad_encoder\lv_demo_keypad_encoder.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xgui</GroupName>
+          <Files>
+            <File>
+              <FileName>xgui_page_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\xgui\xgui_page_led.c</FilePath>
             </File>
           </Files>
         </Group>
