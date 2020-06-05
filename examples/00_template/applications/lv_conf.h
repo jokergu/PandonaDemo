@@ -83,7 +83,7 @@ typedef int16_t lv_coord_t;
 #  define LV_MEM_SIZE    (32U * 1024U)
 
 /* Complier prefix for a big array declaration */
-#  define LV_MEM_ATTR
+#  define LV_MEM_ATTR    __attribute__((at(0X10000000))) /* 分配SRAM2给LVGL使用，大小为32K */
 
 /* Set an address for the memory pool instead of allocating it as an array.
  * Can be in external SRAM too. */
