@@ -41,7 +41,8 @@ void xgui_page_home(void)
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 
-    icon = add_icon(page, &buzzer, "beep");
+    icon = add_icon(page, &buzzer, "蜂鸣器/0"); /* 不加'/0'会导致keil编译报错 */
+    lv_obj_set_style_local_value_font(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, &source_han_sans_k_18);
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 
@@ -94,6 +95,7 @@ static lv_obj_t * add_icon(lv_obj_t * parent, const void * src, const char * txt
     lv_img_set_antialias(icon, false);
 
     lv_obj_set_style_local_value_ofs_y(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, 30); /* 设置值在默认状态下的y轴偏移 */
+    // lv_obj_set_style_local_value_font
     lv_obj_set_style_local_value_str(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, txt); /* 设置默认状态下的值文本 */
     lv_obj_set_style_local_outline_pad(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(40)); /* 设置轮廓在默认状态下与对象的距离 */
     lv_obj_set_style_local_outline_width(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, 3); /* 设置轮廓在默认状态下的宽度 */

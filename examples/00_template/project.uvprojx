@@ -1479,6 +1479,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>font</GroupName>
+          <Files>
+            <File>
+              <FileName>source_han_sans_k_18.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\xgui\font\source_han_sans_k_18.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>
