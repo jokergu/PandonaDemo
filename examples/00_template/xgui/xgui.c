@@ -1,6 +1,7 @@
 #include "xgui.h"
 #include "lv_port_indev.h"
 
+/* keypad设备输入组 */
 lv_group_t *xgui_group;
 
 /**

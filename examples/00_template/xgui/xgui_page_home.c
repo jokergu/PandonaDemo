@@ -17,51 +17,51 @@ void xgui_page_home(void)
 
     lv_group_set_focus_cb(xgui_group, focus_cb); /* 聚焦回调，用于将聚焦对象移动到屏幕可视范围内 */
 
-    lv_obj_t * cont = lv_page_create(lv_scr_act(), NULL);
-    lv_page_set_scrl_layout(cont, LV_LAYOUT_PRETTY_MID);
-    lv_obj_set_size(cont, LV_HOR_RES, LV_VER_RES);
+    lv_obj_t * page = lv_page_create(lv_scr_act(), NULL);
+    lv_page_set_scrl_layout(page, LV_LAYOUT_PRETTY_MID);
+    lv_obj_set_size(page, LV_HOR_RES, LV_VER_RES);
 
     /* 设置背景梯度 */
-    lv_obj_set_style_local_bg_grad_color(cont, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_PURPLE);
-    lv_obj_set_style_local_bg_grad_dir(cont, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_GRAD_DIR_VER);
-    lv_obj_set_style_local_bg_main_stop(cont, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, 0);
-    lv_obj_set_style_local_bg_grad_stop(cont, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, 255);
+    lv_obj_set_style_local_bg_grad_color(page, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_PURPLE);
+    lv_obj_set_style_local_bg_grad_dir(page, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_GRAD_DIR_VER);
+    lv_obj_set_style_local_bg_main_stop(page, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, 0);
+    lv_obj_set_style_local_bg_grad_stop(page, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, 255);
 
-    lv_obj_set_style_local_pad_left(lv_page_get_scrllable(cont), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
-    lv_obj_set_style_local_pad_right(lv_page_get_scrllable(cont), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
-    lv_obj_set_style_local_pad_top(lv_page_get_scrllable(cont), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
-    lv_obj_set_style_local_pad_bottom(lv_page_get_scrllable(cont), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
-    lv_obj_set_style_local_pad_inner(lv_page_get_scrllable(cont), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(100));
+    lv_obj_set_style_local_pad_left(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
+    lv_obj_set_style_local_pad_right(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
+    lv_obj_set_style_local_pad_top(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
+    lv_obj_set_style_local_pad_bottom(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
+    lv_obj_set_style_local_pad_inner(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(100));
 
-    lv_obj_t *icon = add_icon(cont, &light, "LED");
+    lv_obj_t *icon = add_icon(page, &light, "LED");
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 
-    icon = add_icon(cont, &light, "BTN");
+    icon = add_icon(page, &light, "BTN");
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 
-    icon = add_icon(cont, &buzzer, "beep");
+    icon = add_icon(page, &buzzer, "beep");
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 
-    icon = add_icon(cont, &light, "beep");
+    icon = add_icon(page, &light, "beep");
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 
-    icon = add_icon(cont, &light, "beep");
+    icon = add_icon(page, &light, "beep");
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 
-    icon = add_icon(cont, &light, "beep");
+    icon = add_icon(page, &light, "beep");
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 
-    icon = add_icon(cont, &light, "beep");
+    icon = add_icon(page, &light, "beep");
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 
-    icon = add_icon(cont, &light, "beep");
+    icon = add_icon(page, &light, "beep");
     lv_obj_set_event_cb(icon, led_event_cb);
     lv_group_add_obj(xgui_group, icon);
 }
