@@ -12,7 +12,7 @@
 
 #include "xgui.h"
 
-//BUTTON_RELEASE_TIME一定要大于等于LV_INDEV_DEF_READ_PERIOD，否则可能造成事件丢失
+/* BUTTON_RELEASE_TIME一定要大于等于LV_INDEV_DEF_READ_PERIOD，否则可能造成事件丢失 */
 #define BUTTON_RELEASE_TIME    (LV_INDEV_DEF_READ_PERIOD + 10)
 
 enum{
@@ -219,20 +219,14 @@ static void button_scan_timeout(void *parameter)
   */
 static void thread_lvgl_entry(void *parameter)
 {
-    //初始化GUI库
-	lv_init();
+    /* 完成gui准备工作 */
+	xgui_init();
 	
-    //初始化底层显示接口
-	lv_port_disp_init();
-
-    //初始化底层输入设备接口
-	lv_port_indev_init();
-	
-    //调用键盘例程
+    /* 调用例程 */
 	// lv_demo_keypad_encoder();
-    xgui_page_led();
+    xgui_page_home();
 	
-    //周期调用任务处理程序
+    /* 周期调用任务处理程序 */
 	while(1)
     {		
         rt_thread_mdelay(5);
@@ -250,57 +244,57 @@ static void lvgl_demo(void)
 {
 	rt_timer_t timer1, timer2;
 
-    //创建GUI Tick定时器
+    /* 创建GUI Tick定时器 */
 	timer1 = rt_timer_create("lv_tick", lvgl_tick_timeout, RT_NULL, 1, RT_TIMER_FLAG_PERIODIC);
 	if(timer1 != RT_NULL)
 	{
 		rt_timer_start(timer1);
 	}
 	
-    //创建按键扫描定时器
+    /* 创建按键扫描定时器 */
 	timer2 = rt_timer_create("btn_scan", button_scan_timeout, RT_NULL, 5, RT_TIMER_FLAG_PERIODIC);
 	if(timer2 != RT_NULL)
 	{
 		rt_timer_start(timer2);
 	}
 	
-    //创建按键释放定时器
+    /* 创建按键释放定时器 */
     rt_timer_init(&release_timer, "btn_rel", release_timeout, RT_NULL, BUTTON_RELEASE_TIME, RT_TIMER_FLAG_ONE_SHOT);
 
-	//注册按键KEY0
-	rt_pin_mode  (PIN_KEY0, PIN_MODE_INPUT);
+	/* 注册按键KEY0 */
+	rt_pin_mode(PIN_KEY0, PIN_MODE_INPUT);
 	button_init(&btn[USER_KEY_0], key0_get_level, 0);
     button_attach(&btn[USER_KEY_0], SINGLE_CLICK, key0_callback);
     button_attach(&btn[USER_KEY_0], DOUBLE_CLICK, key0_callback);
     button_attach(&btn[USER_KEY_0], LONG_PRESS_HOLD, key0_callback);
 	button_start(&btn[USER_KEY_0]);
 
-    //注册按键KEY1
-	rt_pin_mode  (PIN_KEY1, PIN_MODE_INPUT);
+    /* 注册按键KEY1 */
+	rt_pin_mode(PIN_KEY1, PIN_MODE_INPUT);
 	button_init(&btn[USER_KEY_1], key1_get_level, 0);
     button_attach(&btn[USER_KEY_1], SINGLE_CLICK, key1_callback);
     button_attach(&btn[USER_KEY_1], DOUBLE_CLICK, key1_callback);
     button_attach(&btn[USER_KEY_1], LONG_PRESS_HOLD, key1_callback);
 	button_start(&btn[USER_KEY_1]);
 
-    //注册按键KEY2
-	rt_pin_mode  (PIN_KEY2, PIN_MODE_INPUT);
+    /* 注册按键KEY2 */
+	rt_pin_mode(PIN_KEY2, PIN_MODE_INPUT);
 	button_init(&btn[USER_KEY_2], key2_get_level, 0);
     button_attach(&btn[USER_KEY_2], SINGLE_CLICK, key2_callback);
     button_attach(&btn[USER_KEY_2], DOUBLE_CLICK, key2_callback);
     button_attach(&btn[USER_KEY_2], LONG_PRESS_HOLD, key2_callback);
 	button_start(&btn[USER_KEY_2]);
 
-    //注册按键KEY_WKUP
-	rt_pin_mode  (PIN_WK_UP, PIN_MODE_INPUT);
+    /* 注册按键KEY_WKUP */
+	rt_pin_mode(PIN_WK_UP, PIN_MODE_INPUT);
 	button_init(&btn[USER_KEY_WKUP], key_wkup_get_level, 1);
     button_attach(&btn[USER_KEY_WKUP], SINGLE_CLICK, key_wkup_callback);
     button_attach(&btn[USER_KEY_WKUP], DOUBLE_CLICK, key_wkup_callback);
     button_attach(&btn[USER_KEY_WKUP], LONG_PRESS_HOLD, key_wkup_callback);
 	button_start(&btn[USER_KEY_WKUP]);
 	
-    //创建LVGL任务
-	rt_thread_t thread1 = rt_thread_create("lvgl", thread_lvgl_entry, RT_NULL, 4 * 1024, 20, 5);
+    /* 创建LVGL任务 */
+	rt_thread_t thread1 = rt_thread_create("lvgl", thread_lvgl_entry, RT_NULL, 4 * 1024, 21, 5);
 	if(thread1 != RT_NULL)
 	{
 		rt_thread_startup(thread1);
