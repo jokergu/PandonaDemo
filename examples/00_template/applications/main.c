@@ -12,6 +12,7 @@
 
 #include "xgui.h"
 
+
 /* BUTTON_RELEASE_TIME一定要大于等于LV_INDEV_DEF_READ_PERIOD，否则可能造成事件丢失 */
 #define BUTTON_RELEASE_TIME    (LV_INDEV_DEF_READ_PERIOD + 10)
 
@@ -191,6 +192,75 @@ static void key_wkup_callback(void *arg)
 	
 	rt_timer_start(&release_timer);
 }
+
+/**
+  * @brief  用于处理finsh接收到的ascii，并发送给lvgl
+  * @param  argc：字符串数
+  * @param  argv：指向字符串指针的指针
+  * @retval  无
+  */
+static void kp(int argc, char *argv[])
+{
+    if(argc != 2)
+    {
+        return; /* 接收到的字符串数不是2，则忽略 */
+    }
+
+    int len = rt_strlen(argv[1]);
+    if(len == 1)
+    {
+        /* 设置可见的ASCII码 */
+
+        rt_uint8_t ch = argv[1][0];
+        if(' ' <= ch && ch <= '~')
+        {
+            lv_port_indev_set_state(LV_INDEV_STATE_PR);
+		    lv_port_indev_set_key(ch);
+        }
+    }
+    else
+    {
+        /* 设置控制ASCII码 */
+
+        struct ctrlcode
+        {
+            char *name;
+            rt_int32_t key;
+        };
+        struct ctrlcode table[] =
+        {
+            {"up", LV_KEY_UP},
+            {"down", LV_KEY_DOWN},
+            {"left", LV_KEY_LEFT},
+            {"right", LV_KEY_RIGHT},
+            {"enter", LV_KEY_ENTER},
+            {"next", LV_KEY_NEXT},
+            {"prev", LV_KEY_PREV},
+            {"esc", LV_KEY_ESC},
+            {"del", LV_KEY_DEL},
+            {"backspace", LV_KEY_BACKSPACE},
+            {"home", LV_KEY_HOME},
+            {"end", LV_KEY_END},
+        };
+
+        int ctrlcode_num = sizeof(table) / sizeof(table[0]);
+        for(int i = 0; i < ctrlcode_num; i++)
+        {
+            if(rt_strcmp(argv[1], table[i].name) == 0)
+            {
+                lv_port_indev_set_state(LV_INDEV_STATE_PR);
+                lv_port_indev_set_key(table[i].key);
+                break;
+            }
+        }
+    }
+
+    /* 启动按键释放定时器 */
+    rt_timer_start(&release_timer);
+}
+MSH_CMD_EXPORT(kp, keypad format:kp <key>\n - key = visible ascii:' '~'~'\n\
+ - key = control ascii:'up''down''left''right''enter''next''prev'\n\
+ -                     'esc''del''backspace''home''end');
 
 /**
   * @brief  LVGL心跳
