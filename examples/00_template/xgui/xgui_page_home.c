@@ -5,6 +5,29 @@ static void led_event_cb(lv_obj_t * obj, lv_event_t event);
 static void back_event_cb(lv_obj_t * obj, lv_event_t event);
 static void focus_cb(lv_group_t * g);
 
+typedef struct icon_typedef
+{
+    const void *img_src;
+    const char *text;
+    lv_event_cb_t event_cb;
+}icon_typedef;
+
+LV_IMG_DECLARE(light);
+LV_IMG_DECLARE(buzzer);
+
+static icon_typedef icon_grp[] =
+{
+    {.img_src = &light, .text = "LED", .event_cb = led_event_cb},
+    {.img_src = &buzzer, .text = "蜂鸣器\0", .event_cb = led_event_cb},
+    {.img_src = &light, .text = "Mic", .event_cb = led_event_cb},
+    {.img_src = &light, .text = "LED", .event_cb = led_event_cb},
+    {.img_src = &light, .text = "LED", .event_cb = led_event_cb},
+    {.img_src = &light, .text = "LED", .event_cb = led_event_cb},
+    {.img_src = &light, .text = "LED", .event_cb = led_event_cb},
+    {.img_src = &light, .text = "LED", .event_cb = led_event_cb},
+    {.img_src = &light, .text = "LED", .event_cb = led_event_cb},
+};
+
 /**
   * @brief  显示主页面
   * @param  无
@@ -12,9 +35,6 @@ static void focus_cb(lv_group_t * g);
   */
 void xgui_page_home(void)
 {
-    LV_IMG_DECLARE(light);
-    LV_IMG_DECLARE(buzzer);
-
     lv_group_set_focus_cb(xgui_group, focus_cb); /* 聚焦回调，用于将聚焦对象移动到屏幕可视范围内 */
 
     lv_obj_t * page = lv_page_create(lv_scr_act(), NULL);
@@ -33,38 +53,13 @@ void xgui_page_home(void)
     lv_obj_set_style_local_pad_bottom(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
     lv_obj_set_style_local_pad_inner(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(100));
 
-    lv_obj_t *icon = add_icon(page, &light, "LED");
-    lv_obj_set_event_cb(icon, led_event_cb);
-    lv_group_add_obj(xgui_group, icon);
-
-    icon = add_icon(page, &light, "BTN");
-    lv_obj_set_event_cb(icon, led_event_cb);
-    lv_group_add_obj(xgui_group, icon);
-
-    icon = add_icon(page, &buzzer, "蜂鸣器/0"); /* 不加'/0'会导致keil编译报错 */
-    lv_obj_set_style_local_value_font(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, &source_han_sans_k_18);
-    lv_obj_set_event_cb(icon, led_event_cb);
-    lv_group_add_obj(xgui_group, icon);
-
-    icon = add_icon(page, &light, "beep");
-    lv_obj_set_event_cb(icon, led_event_cb);
-    lv_group_add_obj(xgui_group, icon);
-
-    icon = add_icon(page, &light, "beep");
-    lv_obj_set_event_cb(icon, led_event_cb);
-    lv_group_add_obj(xgui_group, icon);
-
-    icon = add_icon(page, &light, "beep");
-    lv_obj_set_event_cb(icon, led_event_cb);
-    lv_group_add_obj(xgui_group, icon);
-
-    icon = add_icon(page, &light, "beep");
-    lv_obj_set_event_cb(icon, led_event_cb);
-    lv_group_add_obj(xgui_group, icon);
-
-    icon = add_icon(page, &light, "beep");
-    lv_obj_set_event_cb(icon, led_event_cb);
-    lv_group_add_obj(xgui_group, icon);
+    for(int i = 0; i < sizeof(icon_grp) / sizeof(icon_grp[0]); i++)
+    {
+        lv_obj_t *icon = add_icon(page, icon_grp[i].img_src, icon_grp[i].text);
+        lv_obj_set_style_local_value_font(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, &source_han_sans_k_18);
+        lv_obj_set_event_cb(icon, icon_grp[i].event_cb);
+        lv_group_add_obj(xgui_group, icon);
+    }
 }
 
 /**
@@ -77,12 +72,13 @@ void xgui_page_home_back(void)
     /* 返回键 */
     lv_obj_t *back = lv_btn_create(lv_scr_act(), NULL);
     lv_obj_set_size(back, 40, 40);
-    lv_obj_align(back, NULL, LV_ALIGN_IN_BOTTOM_LEFT, 10, 0);
+    lv_obj_align(back, NULL, LV_ALIGN_IN_BOTTOM_LEFT, 10, -5);
     lv_obj_set_event_cb(back, back_event_cb);
     lv_group_add_obj(xgui_group, back);
 
+    lv_obj_set_style_local_border_opa(back, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_TRANSP);
     lv_obj_set_style_local_bg_opa(back, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_TRANSP);
-    lv_obj_set_style_local_radius(back, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, 20);
+    lv_obj_set_style_local_radius(back, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_RADIUS_CIRCLE);
     lv_obj_set_style_local_value_str(back, LV_BTN_PART_MAIN, LV_STATE_DEFAULT, LV_SYMBOL_LEFT);
 }
 
@@ -95,7 +91,6 @@ static lv_obj_t * add_icon(lv_obj_t * parent, const void * src, const char * txt
     lv_img_set_antialias(icon, false);
 
     lv_obj_set_style_local_value_ofs_y(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, 30); /* 设置值在默认状态下的y轴偏移 */
-    // lv_obj_set_style_local_value_font
     lv_obj_set_style_local_value_str(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, txt); /* 设置默认状态下的值文本 */
     lv_obj_set_style_local_outline_pad(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(40)); /* 设置轮廓在默认状态下与对象的距离 */
     lv_obj_set_style_local_outline_width(icon, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, 3); /* 设置轮廓在默认状态下的宽度 */
