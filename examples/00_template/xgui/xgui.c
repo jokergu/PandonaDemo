@@ -1,4 +1,5 @@
 #include "xgui.h"
+#include "lv_port_disp.h"
 #include "lv_port_indev.h"
 
 /* keypad设备输入组 */

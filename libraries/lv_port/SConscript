@@ -1,0 +1,14 @@
+import rtconfig
+from building import *
+
+cwd = GetCurrentDir()
+
+src = ['lv_port_disp.c',
+       'lv_port_indev.c']
+
+path = [cwd + '/', cwd + '/../', cwd + '/../lv_examples']
+
+
+group = DefineGroup('lv_port', src, depend = ['RT_USING_LVGL'], CPPPATH = path)
+
+Return('group')

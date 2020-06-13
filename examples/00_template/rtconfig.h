@@ -84,6 +84,12 @@
 #define RT_SERIAL_RB_BUFSZ 64
 #define RT_USING_PIN
 #define RT_USING_SPI
+#define RT_USING_QSPI
+#define RT_USING_SFUD
+#define RT_SFUD_USING_SFDP
+#define RT_SFUD_USING_FLASH_INFO_TABLE
+#define RT_SFUD_USING_QSPI
+#define RT_USING_W25QXX
 #define RT_USING_WDT
 
 /* Using WiFi */
@@ -190,6 +196,7 @@
 
 /* Onboard Peripheral Drivers */
 
+#define BSP_USING_FLASH
 #define BSP_USING_LCD
 
 /* Offboard Peripheral Drivers */
@@ -200,9 +207,11 @@
 #define BSP_USING_UART1
 #define BSP_UART_USING_DMA_RX
 #define BSP_USING_SPI3
+#define BSP_USING_QSPI
 #define BSP_USING_GPIO
 
 /* External Libraries */
 
+#define RT_USING_LVGL
 
 #endif

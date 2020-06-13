@@ -22,5 +22,9 @@ menu "External Libraries"
     config RT_USING_SMARTCONFIG_LIB
         bool "Using RT-Thrad SmartConfig Library"
         default n
+
+    config RT_USING_LVGL
+        bool "Using LVGL Library"
+        default n
     
 endmenu
