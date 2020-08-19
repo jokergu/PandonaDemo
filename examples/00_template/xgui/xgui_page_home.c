@@ -47,11 +47,11 @@ void xgui_page_home(void)
     lv_obj_set_style_local_bg_main_stop(page, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, 0);
     lv_obj_set_style_local_bg_grad_stop(page, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, 255);
 
-    lv_obj_set_style_local_pad_left(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
-    lv_obj_set_style_local_pad_right(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
-    lv_obj_set_style_local_pad_top(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
-    lv_obj_set_style_local_pad_bottom(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
-    lv_obj_set_style_local_pad_inner(lv_page_get_scrllable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(100));
+    lv_obj_set_style_local_pad_left(lv_page_get_scrollable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
+    lv_obj_set_style_local_pad_right(lv_page_get_scrollable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
+    lv_obj_set_style_local_pad_top(lv_page_get_scrollable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
+    lv_obj_set_style_local_pad_bottom(lv_page_get_scrollable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(50));
+    lv_obj_set_style_local_pad_inner(lv_page_get_scrollable(page), LV_CONT_PART_MAIN, LV_STATE_DEFAULT, LV_DPX(100));
 
     for(int i = 0; i < sizeof(icon_grp) / sizeof(icon_grp[0]); i++)
     {

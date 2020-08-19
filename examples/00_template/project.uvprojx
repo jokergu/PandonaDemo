@@ -907,11 +907,6 @@
           <GroupName>lvgl</GroupName>
           <Files>
             <File>
-              <FileName>lv_debug.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\libraries\lvgl\src\lv_core\lv_debug.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_disp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\lvgl\src\lv_core\lv_disp.c</FilePath>
@@ -1170,6 +1165,11 @@
               <FileName>lv_color.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\libraries\lvgl\src\lv_misc\lv_color.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\libraries\lvgl\src\lv_misc\lv_debug.c</FilePath>
             </File>
             <File>
               <FileName>lv_fs.c</FileName>
